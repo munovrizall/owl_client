@@ -124,21 +124,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         var clientData = <?php echo json_encode($clientData); ?>;
 
-        // Select2 Dropdown
-        $(document).on('select2:open', () => {
-            document.querySelector('.select2-search__field').focus();
-        });
-
-        $(document).ready(function() {
-            //Initialize Select2 Elements
-            $('.select2').select2({
-                theme: 'bootstrap4',
-                width: '100%',
-                containerCssClass: 'height-40px',
-            });
-
-        });
-
         function checkEnter(event) {
             if (event.key === "Enter") {
                 performLogin();
