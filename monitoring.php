@@ -9,6 +9,10 @@ $result = mysqli_query($conn, $query);
 $row = $result->fetch_assoc();
 $namaPT = $row['nama_client'];
 
+if($namaPT == ''){
+    header("Location: login.php");
+}
+
 $queryTransaksi = "SELECT * FROM transaksi_maintenance WHERE nama_client = '$namaPT'";
 $resultTransaksi = mysqli_query($conn, $queryTransaksi);
 

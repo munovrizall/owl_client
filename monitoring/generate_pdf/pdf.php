@@ -2,6 +2,21 @@
 include ("../../connection.php");
 require ("./fpdf/fpdf.php");
 
+$bulanIndonesia = array(
+    "January" => "Januari",
+    "February" => "Februari",
+    "March" => "Maret",
+    "April" => "April",
+    "May" => "Mei",
+    "June" => "Juni",
+    "July" => "Juli",
+    "August" => "Agustus",
+    "September" => "September",
+    "October" => "Oktober",
+    "November" => "November",
+    "December" => "Desember"
+);
+
 if (isset($_GET['id'])) {
     $transaksi_id = $_GET['id'];
 
@@ -14,7 +29,7 @@ if (isset($_GET['id'])) {
     $result = $stmt->get_result();
 
     // You can also fetch data from the transaksi_maintenance table
-    $transaksiQuery = "SELECT nama_client FROM transaksi_maintenance WHERE transaksi_id = ?";
+    $transaksiQuery = "SELECT nama_client, tanggal_terima FROM transaksi_maintenance WHERE transaksi_id = ?";
     $transaksiStmt = $conn->prepare($transaksiQuery);
     $transaksiStmt->bind_param("i", $transaksi_id);
     $transaksiStmt->execute();
@@ -24,7 +39,15 @@ if (isset($_GET['id'])) {
     // Fetch data from the client table based on nama_client
     if ($transaksiRow = $transaksiResult->fetch_assoc()) {
         $nama_client = $transaksiRow['nama_client'];
+        
+        // Fetching date components
+        $tanggal_terima = $transaksiRow['tanggal_terima'];
+        $currentYear = date("Y", strtotime($tanggal_terima));
+        $currentMonth = date("F", strtotime($tanggal_terima));
+        $currentMonthIndonesia = $bulanIndonesia[$currentMonth];
+        $currentDate = date("j", strtotime($tanggal_terima));
 
+        // Continue with fetching data from the client table based on nama_client
         $clientQuery = "SELECT * FROM client WHERE nama_client = ?";
         $clientStmt = $conn->prepare($clientQuery);
         $clientStmt->bind_param("s", $nama_client);
@@ -58,9 +81,6 @@ $bulanIndonesia = array(
     "November" => "November",
     "December" => "Desember"
 );
-$currentMonth = date("F");
-$currentMonthIndonesia = $bulanIndonesia[$currentMonth];
-$currentDate = date("d");
 
 class PDF extends FPDF
 {
