@@ -181,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 username: inputUsername
                             },
                             success: function(response) {
-                                window.location.href = "monitoring.php";
+                                window.location.href = "homepage.php";
                             },
                             error: function(error) {
                                 console.error("Error sending username to server: " + error);

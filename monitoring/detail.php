@@ -3,6 +3,15 @@ include("../connection.php");
 
 $username = $_SESSION['username'];
 
+$queryUsername = "SELECT * FROM client WHERE username = '$username'";
+$resultUsername = mysqli_query($conn, $queryUsername);
+$rowUsername = $resultUsername->fetch_assoc();
+$namaKorespondensi = $rowUsername['nama_korespondensi'];
+
+if ($namaKorespondensi == '') {
+    header("Location: /owl_inventory_client/login.php");
+}
+
 $query = "SELECT * FROM client WHERE username = '$username'";
 $result = mysqli_query($conn, $query);
 $row = $result->fetch_assoc();
@@ -38,7 +47,7 @@ if (isset($_GET['id'])) {
 }
 
 if ($nama_client != $namaPT) {
-    header("Location: ../monitoring.php");
+    header("Location: maintenance.php");
     exit();
 }
 
@@ -153,22 +162,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">
             <!-- Brand Logo -->
-            <a href="../monitoring.php" class="brand-link">
+            <a href="../homepage.php" class="brand-link">
                 <img src="../assets/adminlte/dist/img/OWLlogo.png" alt="OWL Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-heavy">OWL RnD Client</span>
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="../assets/adminlte/dist/img/user.png" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a class="d-block"><?php echo $rowUsername['nama_korespondensi'] ?></a>
+                    </div>
+                </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="monitoring.php" class="nav-link active">
+                            <a href="../homepage.php" class="nav-link">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>Homepage</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="maintenance.php" class="nav-link active">
                                 <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>Monitoring</p>
+                                <p>Monitoring Maintenance</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../inventaris/device.php" class="nav-link">
+                                <i class="nav-icon fas fa-toolbox"></i>
+                                <p>Inventaris Device</p>
                             </a>
                         </li>
                     </ul>
@@ -197,7 +224,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active"><a href="../monitoring.php">Monitoring</a></li>
+                                <li class="breadcrumb-item active"><a href="../homepage.php">Home</a></li>
+                                <li class="breadcrumb-item active"><a href="maintenance.php">Maintenance</a></li>
                                 <li class="breadcrumb-item active">Detail</li>
                             </ol>
                         </div>
