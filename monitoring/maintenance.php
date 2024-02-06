@@ -144,8 +144,8 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="../homepage.php">Home</a></li>
-                                <li class="breadcrumb-item">Monitoring</li>
+                                <li class="breadcrumb-item active"><a href="../homepage.php">Home</a></li>
+                                <li class="breadcrumb-item active">Maintenance</li>
                             </ol>
                         </div>
                     </div>
@@ -285,7 +285,7 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                 responsive: true,
                 language: {
                     lengthMenu: 'Tampilkan _MENU_ data per halaman',
-                    zeroRecords: 'Tidak ada transaksi',
+                    zeroRecords: 'Tidak ada maintenance',
                     info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
                 },
                 dom: 'Bfrtip',

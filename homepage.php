@@ -101,7 +101,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Monitoring Maintenance</title>
+    <title>Homepage</title>
 
     <link rel="icon" href="assets/adminlte/dist/img/OWLlogo.png" type="image/x-icon">
     <!-- Google Font: Source Sans Pro -->
@@ -166,7 +166,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">
             <!-- Brand Logo -->
-            <a href="../homepage.php" class="brand-link">
+            <a href="homepage.php" class="brand-link">
                 <img src="assets/adminlte/dist/img/OWLlogo.png" alt="OWL Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-heavy">OWL RnD Client</span>
             </a>
@@ -238,7 +238,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                 <div class="small-box bg-gradient-info">
                                     <div class="inner">
                                         <h3>Maintenance</h3>
-                                        <p>Melihat barang yang sedang di maintenance</p>
+                                        <p>Melihat detail catatan transaksi maintenance</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-chart-bar"></i>
@@ -252,7 +252,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                 <div class="small-box bg-gradient-success">
                                     <div class="inner">
                                         <h3>Inventaris</h3>
-                                        <p>Melihat inventaris device yang dimiliki</p>
+                                        <p>Melihat detail daftar inventaris device yang dimiliki</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-toolbox"></i>
@@ -268,7 +268,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                 <div class="info-box">
                                     <span class="info-box-icon bg-info"><i class="fas fa-wrench"></i></span>
                                     <div class="info-box-content">
-                                        <span class="info-box-text">Device yang sedang di maintenance</span>
+                                        <span class="info-box-text">Device yang sedang dalam proses maintenance</span>
                                         <span class="info-box-number"><?php echo $rowMaintenanceDeviceCount?></span>
                                     </div>
                                 </div>
@@ -471,7 +471,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                 pageLength: 5,
                 language: {
                     lengthMenu: 'Tampilkan _MENU_ data per halaman',
-                    zeroRecords: 'Tidak ada transaksi',
+                    zeroRecords: 'Tidak ada maintenance',
                     info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
                 },
                 dom: 'Bfrtip',
@@ -486,7 +486,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                 pageLength: 5,
                 language: {
                     lengthMenu: 'Tampilkan _MENU_ data per halaman',
-                    zeroRecords: 'Tidak ada transaksi',
+                    zeroRecords: 'Tidak ada device',
                     info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
                 },
                 dom: 'Bfrtip',

@@ -51,32 +51,6 @@ if ($nama_client != $namaPT) {
     exit();
 }
 
-$updateQuery = "UPDATE detail_maintenance SET kedatangan=?, cek_barang=?, berita_as=?, administrasi=?, pengiriman=?, no_resi=? WHERE detail_id=?";
-$updateStmt = $conn->prepare($updateQuery);
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Check if the form is submitted
-    if (isset($_POST['submitForm'])) {
-        // Loop through the submitted data and update the database
-        foreach ($_POST['checkboxBarangDatang'] as $key => $value) {
-            $detail_id = intval($key); // Convert to integer for security
-            $checkboxBarangDatang = isset($_POST['checkboxBarangDatang'][$detail_id]) ? 1 : 0;
-            $checkboxCekMasalah = isset($_POST['checkboxCekMasalah'][$detail_id]) ? 1 : 0;
-            $checkboxBeritaAcara = isset($_POST['checkboxBeritaAcara'][$detail_id]) ? 1 : 0;
-            $checkboxAdministrasi = isset($_POST['checkboxAdministrasi'][$detail_id]) ? 1 : 0;
-            $checkboxPengiriman = isset($_POST['checkboxPengiriman'][$detail_id]) ? 1 : 0;
-            $noResi = isset($_POST['no_resi'][$detail_id]) ? $_POST['no_resi'][$detail_id] : null;
-
-            // Update the database with the new values for each row
-            $updateStmt->bind_param("iiiiisi", $checkboxBarangDatang, $checkboxCekMasalah, $checkboxBeritaAcara, $checkboxAdministrasi, $checkboxPengiriman, $noResi, $detail_id);
-            $updateStmt->execute();
-        }
-        header("Location: ../monitoring.php");
-        // exit();
-    }
-}
-
-
 ?>
 
 <!DOCTYPE html>
@@ -294,7 +268,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                                             <td><?php echo $row["detail_id"]; ?></td>
                                                             <td><?php echo $row["produk_mt"]; ?></td>
                                                             <td><?php echo $row["no_sn"]; ?></td>
-                                                            <td><?php echo $row["garansi"] == 1 ? 'Yes' : 'No'; ?></td>
+                                                            <td><?php echo $row["garansi"] == 1 ? 'Ya' : 'Tidak'; ?></td>
                                                             <td><?php echo $row["keterangan"]; ?></td>
                                                             <td style="text-align: center;">
                                                                 <div class="form-check">
@@ -334,11 +308,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 </div>
                             </div>
                             <!-- /.card-body -->
-                            <div class="card-footer d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary" name="submitForm">Submit</button>
-                            </div>
                         </form>
-
+                        
+                        <div class="card-footer d-flex justify-content-end">
+                            <button id="backButton" class="btn btn-info" onclick="goBack()"><i class="fas fa-arrow-left" style="padding-right: 8px"></i>Kembali</button>
+                        </div>
                     </div>
                     <!-- general form elements -->
                     <!-- /.card -->
@@ -367,15 +341,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <script src="../assets/adminlte/dist/js/adminlte.min.js"></script>
     <!-- Page specific script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var checkboxes = document.querySelectorAll('.form-check-input');
-
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('change', function() {
-                    this.value = this.checked ? 1 : 0;
-                });
-            });
-        });
+        function goBack() {
+            window.history.back();    
+        }
     </script>
 
 </body>

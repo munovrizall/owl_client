@@ -306,7 +306,7 @@ $result = mysqli_query($conn, $query);
                 responsive: true,
                 language: {
                     lengthMenu: 'Tampilkan _MENU_ data per halaman',
-                    zeroRecords: 'Data tidak ditemukan',
+                    zeroRecords: 'Tidak ada device',
                     info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
                 },
                 dom: 'Bfrtip',
