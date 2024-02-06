@@ -194,7 +194,7 @@ $result = mysqli_query($conn, $query);
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <div class="table-responsive card-padding">
-                                    <table id="tableInventaris" class="table table order-list table-striped table-bordered">
+                                    <table id="tableInventaris" class="table table order-list table-striped table-bordered" >
                                         <thead>
                                             <tr>
                                                 <th class="text-center lebar-kolom1">No</th>

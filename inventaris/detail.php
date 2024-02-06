@@ -206,14 +206,14 @@ if (isset($_GET['id'])) {
                                             <table>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="table-head"><b>Nama Perusahaan :</b></td>
+                                                        <td class="table-head" style="min-width: 180px"><b>Nama Perusahaan :</b></td>
                                                         <td>
                                                             <?php
                                                             $nama_client = $row["nama_client"];
                                                             echo $nama_client !== null ? $nama_client : '-';
                                                             ?>
                                                         </td>
-                                                        <td><b>Free RAM :</b></td>
+                                                        <td class="table-head" style="min-width: 180px"><b>Free RAM :</b></td>
                                                         <td>
                                                             <?php
                                                             $free_ram = $row["free_ram"];

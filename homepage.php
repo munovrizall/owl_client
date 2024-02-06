@@ -140,6 +140,8 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
         .card-padding {
             padding: 10px 20px;
         }
+
+      
     </style>
 </head>
 
@@ -268,8 +270,8 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                 <div class="info-box">
                                     <span class="info-box-icon bg-info"><i class="fas fa-wrench"></i></span>
                                     <div class="info-box-content">
-                                        <span class="info-box-text">Device yang sedang dalam proses maintenance</span>
-                                        <span class="info-box-number"><?php echo $rowMaintenanceDeviceCount?></span>
+                                        <span class="info-box-text">Jumlah device yang sedang maintenance</span>
+                                        <span class="info-box-number"><?php echo $rowMaintenanceDeviceCount ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -368,58 +370,60 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                         </div>
                                     </div>
                                     <div class="card-body p-0">
-                                        <table id="tableInventaris" class="table table order-list table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center lebar-kolom1">No</th>
-                                                    <th class="text-center lebar-kolom3">Nomor SN</th>
-                                                    <th class="text-center lebar-kolom2">Produk</th>
-                                                    <th class="text-center lebar-kolom4">Perusahaan</th>
-                                                    <th class="text-center lebar-kolom5">Garansi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $counter = 0;
-                                                while ($rowDevice = mysqli_fetch_assoc($resultDevice)) {
-                                                    $counter++;
-                                                    $statusClass = 'bg-danger'; // Default class
-                                                    $statusText = 'Tidak'; // Default text
-
-                                                    // Check if any rowDevice is missing and set default values
-                                                    if (
-                                                        empty($rowDevice["garansi_akhir"]) // Check if warranty expiry date is missing
-                                                        // Add similar checks for other rowDevices as needed
-                                                    ) {
-                                                        $statusClass = '-';
-                                                        $statusText = '-';
-                                                    } else {
-                                                        // Check conditions for bg-success
-                                                        $allConditionsMet = true;
-                                                        if (strtotime($rowDevice["garansi_akhir"]) < strtotime('today') || $rowDevice["garansi_void"] == 1) { // Check if warranty expiry date is before today
-                                                            $allConditionsMet = false;
-                                                        }
-
-                                                        if ($allConditionsMet) {
-                                                            $statusClass = 'bg-success';
-                                                            $statusText = 'Ya';
-                                                        }
-                                                    }
-
-                                                    // Output table rowDevice with appropriate status class and text
-                                                ?>
+                                        <div class="table-responsive">
+                                            <table id="tableInventaris" class="table table order-list table-striped table-bordered">
+                                                <thead>
                                                     <tr>
-                                                        <td><?php echo $counter; ?></td>
-                                                        <td><?php echo $rowDevice["no_sn"]; ?></td>
-                                                        <td><?php echo $rowDevice["produk"] ?></td>
-                                                        <td><?php echo !empty($rowDevice["nama_client"]) ? $rowDevice["nama_client"] : '-' ?></td>
-                                                        <td class="text-center"><span class="badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span></td>
+                                                        <th class="text-center lebar-kolom1">No</th>
+                                                        <th class="text-center lebar-kolom3">Nomor SN</th>
+                                                        <th class="text-center lebar-kolom2">Produk</th>
+                                                        <th class="text-center lebar-kolom4">Perusahaan</th>
+                                                        <th class="text-center lebar-kolom5">Garansi</th>
                                                     </tr>
-                                                <?php
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $counter = 0;
+                                                    while ($rowDevice = mysqli_fetch_assoc($resultDevice)) {
+                                                        $counter++;
+                                                        $statusClass = 'bg-danger'; // Default class
+                                                        $statusText = 'Tidak'; // Default text
+
+                                                        // Check if any rowDevice is missing and set default values
+                                                        if (
+                                                            empty($rowDevice["garansi_akhir"]) // Check if warranty expiry date is missing
+                                                            // Add similar checks for other rowDevices as needed
+                                                        ) {
+                                                            $statusClass = '-';
+                                                            $statusText = '-';
+                                                        } else {
+                                                            // Check conditions for bg-success
+                                                            $allConditionsMet = true;
+                                                            if (strtotime($rowDevice["garansi_akhir"]) < strtotime('today') || $rowDevice["garansi_void"] == 1) { // Check if warranty expiry date is before today
+                                                                $allConditionsMet = false;
+                                                            }
+
+                                                            if ($allConditionsMet) {
+                                                                $statusClass = 'bg-success';
+                                                                $statusText = 'Ya';
+                                                            }
+                                                        }
+
+                                                        // Output table rowDevice with appropriate status class and text
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $counter; ?></td>
+                                                            <td><?php echo $rowDevice["no_sn"]; ?></td>
+                                                            <td><?php echo $rowDevice["produk"] ?></td>
+                                                            <td><?php echo !empty($rowDevice["nama_client"]) ? $rowDevice["nama_client"] : '-' ?></td>
+                                                            <td class="text-center"><span class="badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

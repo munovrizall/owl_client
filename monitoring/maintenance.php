@@ -170,9 +170,9 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                                             <tr>
                                                 <th class="text-center lebar-kolom1">No</th>
                                                 <th class="text-center lebar-kolom2">Tanggal</th>
-                                                <th class="text-center lebar-kolom3">Nama PT</th>
+                                                <th class="text-center lebar-kolom3" style="min-width: 80px">Nama PT</th>
                                                 <th class="text-center lebar-kolom4">Status</th>
-                                                <th class="text-center lebar-kolom5 aksi-column">Aksi</th>
+                                                <th class="text-center lebar-kolom5 aksi-column" style="min-width: 120px">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -219,7 +219,7 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                                                     <td class="text-center"><span class="badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span></td>
                                                     <td class="text-center">
                                                         <div class="row">
-                                                            <div class="col">
+                                                            <div class="col" style="margin-bottom: 8px">
                                                                 <a href='detail.php?id=<?php echo $row["transaksi_id"]; ?>' class="btn btn-info btn-block">Detail</a>
                                                             </div>
                                                             <div class="col">
