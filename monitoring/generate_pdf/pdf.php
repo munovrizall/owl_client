@@ -2,6 +2,8 @@
 include ("../../connection.php");
 require ("./fpdf/fpdf.php");
 
+$imageTTD = "../../assets/adminlte/dist/img/ttd.png";
+
 $bulanIndonesia = array(
     "January" => "Januari",
     "February" => "Februari",
@@ -127,7 +129,7 @@ $pdf->Cell(0,10,"BERITA ACARA SERAH TERIMA BARANG",0,1,"C");
 
 $pdf->SetFont("Times","",12);
 $pdf->Cell(0,10,"Kami yang bertanda tangan di bawah ini, pada tanggal $currentDate, bulan $currentMonthIndonesia, tahun $currentYear",0,1);
-$pdf->Cell(0,10,"Nama         : Riki Muhamad Rifai",0,1);
+$pdf->Cell(0,10,"Nama         : Ahmad Sabhadi",0,1);
 $pdf->MultiCell(0, 10, "Alamat       : Komplek Golden Plaza Fatmawati (Lottemart Fatmawati) Blok E No. 12A, Jl. R.S.
                      Fatmawati No. 15 Kel. Gandaria, Kec. Cilandak, Jakarta Selatan", 0, 1);
 $pdf->Cell(0,10,"Selanjutnya disebut PIHAK PERTAMA",0,1);
@@ -209,12 +211,12 @@ $pdf->MultiCell(0,5,"Demikian berita acara serah terima barang ini dibuat oleh k
 $pdf->Cell(0,10,"Yang Menyerahkan :",0,0, 'L');
 $pdf->Cell(0,10,"Yang Menerima :",0,1, 'R');
 
+$pdf->Cell( 40, 40, $pdf->Image($imageTTD, $pdf->GetX(), $pdf->GetY(), 33.78), 0, 0, 'L', false );
 //Beri Underline
 $pdf->SetFont("Times","U",12);
 //Beri Jarak TTD
 $pdf->Cell(0,20,"",0,1,);
-
-$pdf->Cell(0,10,"Riki Muhamad Rifai",0,0, 'L');
+$pdf->Cell(0,10,"Ahmad Sabhadi",0,0, 'L');
 $pdf->Cell(0,10,"$nama_korespondensi",0,1, 'R');
 
 
