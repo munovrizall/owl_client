@@ -1,5 +1,5 @@
 <?php
-include("../connection.php");
+include("../includes/connection.php");
 
 $username = $_SESSION['username'];
 
@@ -9,7 +9,7 @@ $rowUsername = $resultUsername->fetch_assoc();
 $namaKorespondensi = $rowUsername['nama_korespondensi'];
 
 if ($namaKorespondensi == '') {
-    header("Location: /owl_inventory_client/login.php");
+    header("Location: /owl_client/");
 }
 
 $query = "SELECT * FROM client WHERE username = '$username'";
@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
 }
 
 if ($nama_client != $namaPT) {
-    header("Location: maintenance.php");
+    header("Location: maintenance");
     exit();
 }
 
@@ -136,7 +136,7 @@ if ($nama_client != $namaPT) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">
             <!-- Brand Logo -->
-            <a href="../homepage.php" class="brand-link">
+            <a href="../homepage" class="brand-link">
                 <img src="../assets/adminlte/dist/img/OWLlogo.png" alt="OWL Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-heavy">OWL RnD Client</span>
             </a>
@@ -155,19 +155,19 @@ if ($nama_client != $namaPT) {
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="../homepage.php" class="nav-link">
+                            <a href="../homepage" class="nav-link">
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>Homepage</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="maintenance.php" class="nav-link active">
+                            <a href="maintenance" class="nav-link active">
                                 <i class="nav-icon fas fa-chart-bar"></i>
                                 <p>Monitoring Maintenance</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../inventaris/device.php" class="nav-link">
+                            <a href="../inventaris/device" class="nav-link">
                                 <i class="nav-icon fas fa-toolbox"></i>
                                 <p>Inventaris Device</p>
                             </a>
@@ -198,8 +198,8 @@ if ($nama_client != $namaPT) {
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active"><a href="../homepage.php">Home</a></li>
-                                <li class="breadcrumb-item active"><a href="maintenance.php">Maintenance</a></li>
+                                <li class="breadcrumb-item active"><a href="../homepage">Home</a></li>
+                                <li class="breadcrumb-item active"><a href="maintenance">Maintenance</a></li>
                                 <li class="breadcrumb-item active">Detail</li>
                             </ol>
                         </div>

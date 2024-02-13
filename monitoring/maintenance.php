@@ -1,6 +1,6 @@
 <?php
 
-include "../connection.php";
+include "../includes/connection.php";
 
 $username = $_SESSION['username'];
 
@@ -10,7 +10,7 @@ $row = $result->fetch_assoc();
 $namaPT = $row['nama_client'];
 
 if ($namaPT == '') {
-    header("Location: /owl_inventory_client/login.php");
+    header("Location: /owl_client");
 }
 
 $queryTransaksi = "SELECT * FROM transaksi_maintenance WHERE nama_client = '$namaPT' ORDER BY tanggal_terima DESC";
@@ -76,20 +76,13 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="logout.php">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </li>
-            </ul>
         </nav>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">
             <!-- Brand Logo -->
-            <a href="../homepage.php" class="brand-link">
+            <a href="../homepage" class="brand-link">
                 <img src="../assets/adminlte/dist/img/OWLlogo.png" alt="OWL Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-heavy">OWL RnD Client</span>
             </a>
@@ -108,19 +101,19 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="../homepage.php" class="nav-link">
+                            <a href="../homepage" class="nav-link">
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>Homepage</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="maintenance.php" class="nav-link active">
+                            <a href="maintenance" class="nav-link active">
                                 <i class="nav-icon fas fa-chart-bar"></i>
                                 <p>Monitoring Maintenance</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../inventaris/device.php" class="nav-link">
+                            <a href="../inventaris/device" class="nav-link">
                                 <i class="nav-icon fas fa-toolbox"></i>
                                 <p>Inventaris Device</p>
                             </a>
@@ -144,7 +137,7 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active"><a href="../homepage.php">Home</a></li>
+                                <li class="breadcrumb-item active"><a href="../homepage">Home</a></li>
                                 <li class="breadcrumb-item active">Maintenance</li>
                             </ol>
                         </div>
@@ -220,10 +213,10 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                                                     <td class="text-center">
                                                         <div class="row">
                                                             <div class="col" style="margin-bottom: 8px">
-                                                                <a href='detail.php?id=<?php echo $row["transaksi_id"]; ?>' class="btn btn-info btn-block">Detail</a>
+                                                                <a href='detail?id=<?php echo $row["transaksi_id"]; ?>' class="btn btn-info btn-block">Detail</a>
                                                             </div>
                                                             <div class="col">
-                                                                <a href='generate_pdf/pdf.php?id=<?php echo $row["transaksi_id"]; ?>' class="btn btn-block btn-outline-danger"><i class="fas fa-file-pdf" style="margin-right: 8px;"></i>PDF</a>
+                                                                <a href='generate_pdf/pdf?id=<?php echo $row["transaksi_id"]; ?>' class="btn btn-block btn-outline-danger"><i class="fas fa-file-pdf" style="margin-right: 8px;"></i>PDF</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -346,7 +339,7 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
                 var idToEdit = 123;
 
                 // Lakukan redirect dengan menyertakan ID sebagai parameter
-                window.location.href = 'edit/edit.php?id=' + idToEdit;
+                window.location.href = 'edit/edit?id=' + idToEdit;
             });
 
         });

@@ -1,5 +1,5 @@
 <?php
-include ("../../connection.php");
+include ("../../includes/connection.php");
 require ("./fpdf/fpdf.php");
 
 $imageTTD = "../../assets/adminlte/dist/img/ttd.png";

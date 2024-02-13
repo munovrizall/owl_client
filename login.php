@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="login.php" class="h1">
+                <a href="login" class="h1">
                     <img src="assets/adminlte/dist/img/OWLlogo.png" alt="OWL Inventory" class="brand-image img-circle elevation-3" style="background-color: black; padding: 8px; opacity: .8; height: 50px; width: 50px;">
                     <b>OWL</b> RnD client
                 </a>
@@ -176,12 +176,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         // Perform AJAX request to send username to server
                         $.ajax({
                             type: "POST",
-                            url: "process_username.php",
+                            url: "includes/process_username.php",
                             data: {
                                 username: inputUsername
                             },
                             success: function(response) {
-                                window.location.href = "homepage.php";
+                                window.location.href = "homepage";
                             },
                             error: function(error) {
                                 console.error("Error sending username to server: " + error);

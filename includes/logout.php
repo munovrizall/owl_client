@@ -9,6 +9,6 @@ session_unset();
 session_destroy();
 
 // Redirect ke halaman login (gantilah dengan halaman login yang sesuai)
-header("Location: login.php");
+header("Location: /owl_client");
 exit();
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-include "../connection.php";
+include "../includes/connection.php";
 
 $username = $_SESSION['username'];
 
@@ -10,7 +10,7 @@ $rowClient = $result->fetch_assoc();
 $namaPT = $rowClient['nama_client'];
 
 if ($namaPT == '') {
-    header("Location: /owl_inventory_client/login.php");
+    header("Location: /owl_client");
 }
 
 if (isset($_GET['id'])) {
@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
     $namaClientInventaris = $row['nama_client'];
 
     if ($namaPT != $namaClientInventaris) {
-        header("Location: device.php");
+        header("Location: device");
     }
 } else {
     echo "ID not provided.";
@@ -121,7 +121,7 @@ if (isset($_GET['id'])) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">
             <!-- Brand Logo -->
-            <a href="../homepage.php" class="brand-link">
+            <a href="../homepage" class="brand-link">
                 <img src="../assets/adminlte/dist/img/OWLlogo.png" alt="OWL Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-heavy">OWL RnD</span>
             </a>
@@ -140,19 +140,19 @@ if (isset($_GET['id'])) {
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="../homepage.php" class="nav-link">
+                            <a href="../homepage" class="nav-link">
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>Homepage</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../monitoring/maintenance.php" class="nav-link">
+                            <a href="../monitoring/maintenance" class="nav-link">
                                 <i class="nav-icon fas fa-chart-bar"></i>
                                 <p>Monitoring Maintenance</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../inventaris/device.php" class="nav-link active">
+                            <a href="../inventaris/device" class="nav-link active">
                                 <i class="nav-icon fas fa-toolbox"></i>
                                 <p>Inventaris Device</p>
                             </a>
@@ -175,8 +175,8 @@ if (isset($_GET['id'])) {
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="../homepage.php">Home</a></li>
-                                <li class="breadcrumb-item active"><a href="device.php">Inventaris Device</a></li>
+                                <li class="breadcrumb-item"><a href="../homepage">Home</a></li>
+                                <li class="breadcrumb-item active"><a href="device">Inventaris Device</a></li>
                                 <li class="breadcrumb-item active">Detail</li>
                             </ol>
                         </div>
