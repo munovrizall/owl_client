@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 if (empty($_SESSION['username'])) {
-    header("Location: /owl_client/login.php");
+    header("Location: /owl_client");
     exit();
 }
 
