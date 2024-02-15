@@ -66,24 +66,6 @@ if (isset($_GET['id'])) {
 } else {
     echo "ID not provided.";
 }
-
-$username = $_SESSION['username'];
-$currentYear = date("Y");
-$bulanIndonesia = array(
-    "January" => "Januari",
-    "February" => "Februari",
-    "March" => "Maret",
-    "April" => "April",
-    "May" => "Mei",
-    "June" => "Juni",
-    "July" => "Juli",
-    "August" => "Agustus",
-    "September" => "September",
-    "October" => "Oktober",
-    "November" => "November",
-    "December" => "Desember"
-);
-
 class PDF extends FPDF
 {
     function WrapAndPrintAddress($alamat_perusahaan)
