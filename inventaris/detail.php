@@ -98,9 +98,9 @@ if (isset($_GET['id'])) {
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
     <div class="wrapper">
 
-        <?php 
-        include $rootPath . "/owl_client/includes/navbar.html"; 
-        include $rootPath . "/owl_client/includes/sidebar.php"; 
+        <?php
+        include $rootPath . "/owl_client/includes/navbar.html";
+        include $rootPath . "/owl_client/includes/sidebar.php";
         ?>
 
         <!-- Content Wrapper. Contains page content -->
@@ -396,7 +396,7 @@ if (isset($_GET['id'])) {
                                                         <td>
                                                             <?php
                                                             $last_online = $row["last_online"];
-                                                            echo "{$last_online}";
+                                                            echo date('H:i d-m-Y', strtotime($last_online));
                                                             ?>
                                                         </td>
                                                     </tr>
