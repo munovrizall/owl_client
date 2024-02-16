@@ -2,6 +2,7 @@
 
 include "includes/connection.php";
 
+$rootPath = $_SERVER['DOCUMENT_ROOT'];
 $username = $_SESSION['username'];
 
 $query = "SELECT * FROM client WHERE username = '$username'";
@@ -103,18 +104,10 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Homepage</title>
 
-    <link rel="icon" href="assets/adminlte/dist/img/OWLlogo.png" type="image/x-icon">
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/adminlte/plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="assets/adminlte/dist/css/adminlte.min.css">
-    <!-- Table with search -->
-    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-print-2.4.2/fh-3.4.0/r-2.5.0/rg-1.4.1/sb-1.6.0/sp-2.2.0/datatables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
+    <?php
+    $rootPath = $_SERVER['DOCUMENT_ROOT'];
+    include $rootPath . "/owl_client/includes/stylesheet.html";
+    ?>
 
     <style>
         .lebar-kolom1 {

@@ -61,13 +61,10 @@ if ($nama_client != $namaPT) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Monitoring Transaksi</title>
 
-    <link rel="icon" href="../assets/adminlte/dist/img/OWLlogo.png" type="image/x-icon">
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../assets/adminlte/plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../assets/adminlte/dist/css/adminlte.min.css">
+    <?php
+    $rootPath = $_SERVER['DOCUMENT_ROOT'];
+    include $rootPath . "/owl_client/includes/stylesheet.html";
+    ?>
 
     <style>
         .lebar-kolom1 {

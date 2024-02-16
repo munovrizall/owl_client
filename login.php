@@ -54,15 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
 
-    <link rel="icon" href="assets/adminlte/dist/img/OWLlogo.png" type="image/x-icon">
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/adminlte/plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="assets/adminlte/dist/css/adminlte.min.css">
-    <!-- Sweetalert2 -->
-    <link rel="stylesheet" href="assets/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <?php
+    $rootPath = $_SERVER['DOCUMENT_ROOT'];
+    include $rootPath . "/owl_client/includes/stylesheet.html";
+    ?>
 
     <style>
         .select2 {
