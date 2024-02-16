@@ -119,16 +119,8 @@ if ($nama_client != $namaPT) {
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
     <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark navbar-dark">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.navbar -->
+
+        <?php include $rootPath . "/owl_client/includes/navbar.html"; ?>
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">
@@ -306,7 +298,7 @@ if ($nama_client != $namaPT) {
                             </div>
                             <!-- /.card-body -->
                         </form>
-                        
+
                         <div class="card-footer d-flex justify-content-end">
                             <button id="backButton" class="btn btn-info" onclick="goBack()"><i class="fas fa-arrow-left" style="padding-right: 8px"></i>Kembali</button>
                         </div>
@@ -339,7 +331,7 @@ if ($nama_client != $namaPT) {
     <!-- Page specific script -->
     <script>
         function goBack() {
-            window.history.back();    
+            window.history.back();
         }
     </script>
 

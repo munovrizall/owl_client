@@ -60,16 +60,8 @@ $resultTransaksi = mysqli_query($conn, $queryTransaksi);
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
     <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark navbar-dark">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.navbar -->
+
+        <?php include $rootPath . "/owl_client/includes/navbar.html"; ?>
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">

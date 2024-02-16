@@ -61,7 +61,7 @@ $result = mysqli_query($conn, $query);
     $rootPath = $_SERVER['DOCUMENT_ROOT'];
     include $rootPath . "/owl_client/includes/stylesheet.html";
     ?>
-    
+
     <style>
         .lebar-kolom1 {
             width: 5%;
@@ -95,16 +95,8 @@ $result = mysqli_query($conn, $query);
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
     <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark navbar-dark">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.navbar -->
+
+        <?php include $rootPath . "/owl_client/includes/navbar.html"; ?>
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed">
@@ -184,7 +176,7 @@ $result = mysqli_query($conn, $query);
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <div class="table-responsive card-padding">
-                                    <table id="tableInventaris" class="table table order-list table-striped table-bordered" >
+                                    <table id="tableInventaris" class="table table order-list table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="text-center lebar-kolom1">No</th>
