@@ -178,7 +178,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                         <p>Melihat detail catatan transaksi maintenance</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="fas fa-chart-bar"></i>
+                                        <i class="fas fa-screwdriver-wrench"></i>
                                     </div>
                                     <a href="monitoring/maintenance" class="small-box-footer">
                                         Lihat <i class="fas fa-arrow-circle-right"></i>

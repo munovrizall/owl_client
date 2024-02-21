@@ -42,7 +42,7 @@ $namaKorespondensi = $rowUsername['nama_korespondensi'];
                                                                                         strpos($_SERVER['REQUEST_URI'], '/owl_client/monitoring/detail') !== false
                                                                                         ? 'active'
                                                                                         : ''; ?>">
-                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <i class="nav-icon fas fa-screwdriver-wrench"></i>
                         <p>Monitoring Maintenance</p>
                     </a>
                 </li>
