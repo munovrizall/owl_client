@@ -171,8 +171,8 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                 <div class="container-fluid">
                     <section class="content">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="small-box bg-gradient-info">
+                            <div class="col-md-4">
+                                <div class="small-box bg-gradient-danger">
                                     <div class="inner">
                                         <h3>Maintenance</h3>
                                         <p>Melihat detail catatan transaksi maintenance</p>
@@ -185,7 +185,7 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="small-box bg-gradient-success">
                                     <div class="inner">
                                         <h3>Inventaris</h3>
@@ -199,11 +199,25 @@ $rowMaintenanceDeviceCount = mysqli_fetch_assoc($resultMaintenanceDevice)['total
                                     </a>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="small-box bg-gradient-info">
+                                    <div class="inner">
+                                        <h3>Devices</h3>
+                                        <p>Melihat status device yang dimiliki</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-walkie-talkie"></i>
+                                    </div>
+                                    <a href="status_device" class="small-box-footer">
+                                        Lihat <i class="fas fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="info-box">
-                                    <span class="info-box-icon bg-info"><i class="fas fa-wrench"></i></span>
+                                    <span class="info-box-icon bg-danger"><i class="fas fa-wrench"></i></span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Jumlah device yang sedang maintenance</span>
                                         <span class="info-box-number"><?php echo $rowMaintenanceDeviceCount ?></span>
