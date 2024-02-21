@@ -48,12 +48,21 @@ $namaKorespondensi = $rowUsername['nama_korespondensi'];
                 </li>
                 <li class="nav-item">
                     <a href="/owl_client/inventaris/device" class="nav-link <?php
-                                                                            echo (strpos($current_page, 'device') !== false) ||
+                                                                            echo strpos($_SERVER['REQUEST_URI'], '/owl_client/inventaris/device') !== false ||
                                                                                 strpos($_SERVER['REQUEST_URI'], '/owl_client/inventaris/detail') !== false
                                                                                 ? 'active'
                                                                                 : ''; ?>">
                         <i class="nav-icon fas fa-toolbox"></i>
                         <p>Inventaris Device</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/owl_client/status_device" class="nav-link <?php
+                                                                            echo strpos($_SERVER['REQUEST_URI'], '/owl_client/status_device') !== false
+                                                                                ? 'active'
+                                                                                : ''; ?>">
+                        <i class="nav-icon fas fa-walkie-talkie"></i>
+                        <p>Status Device</p>
                     </a>
                 </li>
             </ul>
