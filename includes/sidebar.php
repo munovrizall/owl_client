@@ -38,7 +38,7 @@ $namaKorespondensi = $rowUsername['nama_korespondensi'];
                 </li>
                 <li class="nav-item">
                     <a href="/owl_client/monitoring/maintenance" class="nav-link <?php
-                                                                                    echo (strpos($current_page, 'maintenance') !== false) ||
+                                                                                    echo strpos($current_page, 'maintenance') !== false ||
                                                                                         strpos($_SERVER['REQUEST_URI'], '/owl_client/monitoring/detail') !== false
                                                                                         ? 'active'
                                                                                         : ''; ?>">
@@ -49,7 +49,7 @@ $namaKorespondensi = $rowUsername['nama_korespondensi'];
                 <li class="nav-item">
                     <a href="/owl_client/inventaris/device" class="nav-link <?php
                                                                             echo strpos($_SERVER['REQUEST_URI'], '/owl_client/inventaris/device') !== false ||
-                                                                                strpos($_SERVER['REQUEST_URI'], '/owl_client/inventaris/detail') !== false
+                                                                                strpos($_SERVER['REQUEST_URI'], '/owl_client/inventaris/detail/detail.php') !== false
                                                                                 ? 'active'
                                                                                 : ''; ?>">
                         <i class="nav-icon fas fa-toolbox"></i>

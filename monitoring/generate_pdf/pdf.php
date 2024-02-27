@@ -1,6 +1,6 @@
 <?php
-include ("../../includes/connection.php");
-require ("./fpdf/fpdf.php");
+include("../../includes/connection.php");
+require("./fpdf/fpdf.php");
 
 $imageTTD = "../../assets/adminlte/dist/img/ttd.png";
 
@@ -31,7 +31,7 @@ if (isset($_GET['id'])) {
     $result = $stmt->get_result();
 
     // You can also fetch data from the transaksi_maintenance table
-    $transaksiQuery = "SELECT nama_client, tanggal_terima FROM transaksi_maintenance WHERE transaksi_id = ?";
+    $transaksiQuery = "SELECT nama_client, tanggal_terima, last_edit FROM transaksi_maintenance WHERE transaksi_id = ?";
     $transaksiStmt = $conn->prepare($transaksiQuery);
     $transaksiStmt->bind_param("i", $transaksi_id);
     $transaksiStmt->execute();
@@ -41,7 +41,22 @@ if (isset($_GET['id'])) {
     // Fetch data from the client table based on nama_client
     if ($transaksiRow = $transaksiResult->fetch_assoc()) {
         $nama_client = $transaksiRow['nama_client'];
-        
+        $last_edit = $transaksiRow['last_edit'];
+
+        if ($last_edit === null) {
+            // If last_edit is null, use ahmad sabhadi name
+            $namaLengkap = "Ahmad Sabhadi";
+        } else {
+            // Otherwise, continue with fetching data from the user_account table based on $last_edit
+            $userQuery = "SELECT nama_lengkap FROM user_account WHERE username = ?";
+            $userStmt = $conn->prepare($userQuery);
+            $userStmt->bind_param("s", $last_edit);
+            $userStmt->execute();
+            $userResult = $userStmt->get_result();
+            $userRow = $userResult->fetch_assoc();
+            $namaLengkap = $userRow["nama_lengkap"];
+        }
+
         // Fetching date components
         $tanggal_terima = $transaksiRow['tanggal_terima'];
         $currentYear = date("Y", strtotime($tanggal_terima));
@@ -59,12 +74,24 @@ if (isset($_GET['id'])) {
         $clientRow = $clientResult->fetch_assoc();
         $alamat_perusahaan = $clientRow["alamat_perusahaan"];
         $nama_korespondensi = $clientRow["nama_korespondensi"];
-        
     } else {
         echo "Nama client not found.";
     }
 } else {
     echo "ID not provided.";
+}
+
+// Fetching the image link from the database
+$tanda_tangan_query = "SELECT tanda_tangan FROM user_account WHERE nama_lengkap = ?";
+$tanda_tangan_stmt = $conn->prepare($tanda_tangan_query);
+$tanda_tangan_stmt->bind_param("s", $namaLengkap);
+$tanda_tangan_stmt->execute();
+$tanda_tangan_result = $tanda_tangan_stmt->get_result();
+
+if ($tanda_tangan_row = $tanda_tangan_result->fetch_assoc()) {
+    $tanda_tangan_link = $tanda_tangan_row['tanda_tangan'];
+} else {
+    $tanda_tangan_link = '';
 }
 class PDF extends FPDF
 {
@@ -81,6 +108,17 @@ class PDF extends FPDF
             }
         }
     }
+
+    function AddSignatureImage($tanda_tangan_link)
+    {
+        if (!empty($tanda_tangan_link)) {
+            // Set the position for the signature image
+            $this->SetXY(25, $this->GetY());
+            // Add the signature image to the PDF
+            $this->Image($tanda_tangan_link, $this->GetX(), $this->GetY(), 30, 30);
+        }
+    }
+
     function WrapAndPrintRow($row)
     {
         $this->Cell(10, 10, $row['counter'], 1, 0, 'C');
@@ -93,39 +131,39 @@ class PDF extends FPDF
     }
 }
 
-$pdf = new PDF("P","mm","A4");
+$pdf = new PDF("P", "mm", "A4");
 
 $pdf->AddPage();
-$pdf->SetFont("Times","",12);
-$pdf->SetMargins(20,0,20);
+$pdf->SetFont("Times", "", 12);
+$pdf->SetMargins(20, 0, 20);
 
 //Cell(Width, Height, Text, Border, End Line, Align)
 
-$pdf->Cell(0,10,"$transaksi_id/RnD/$currentYear",0,1,"R");
+$pdf->Cell(0, 10, "$transaksi_id/RnD/$currentYear", 0, 1, "R");
 
 //Jarak
-$pdf->Cell(0,20,"",0,1,);
+$pdf->Cell(0, 20, "", 0, 1,);
 
-$pdf->SetFont("Times","B",12);
-$pdf->Cell(0,10,"BERITA ACARA SERAH TERIMA BARANG",0,1,"C");
+$pdf->SetFont("Times", "B", 12);
+$pdf->Cell(0, 10, "BERITA ACARA SERAH TERIMA BARANG", 0, 1, "C");
 
-$pdf->SetFont("Times","",12);
-$pdf->Cell(0,10,"Kami yang bertanda tangan di bawah ini, pada tanggal $currentDate, bulan $currentMonthIndonesia, tahun $currentYear",0,1);
-$pdf->Cell(0,10,"Nama         : Ahmad Sabhadi",0,1);
+$pdf->SetFont("Times", "", 12);
+$pdf->Cell(0, 10, "Kami yang bertanda tangan di bawah ini, pada tanggal $currentDate, bulan $currentMonthIndonesia, tahun $currentYear", 0, 1);
+$pdf->Cell(0, 10, "Nama         : $namaLengkap", 0, 1);
 $pdf->MultiCell(0, 10, "Alamat       : Komplek Golden Plaza Fatmawati (Lottemart Fatmawati) Blok E No. 12A, Jl. R.S.
                      Fatmawati No. 15 Kel. Gandaria, Kec. Cilandak, Jakarta Selatan", 0, 1);
-$pdf->Cell(0,10,"Selanjutnya disebut PIHAK PERTAMA",0,1);
-$pdf->Cell(0,10,"Nama         : $nama_korespondensi",0,1);
+$pdf->Cell(0, 10, "Selanjutnya disebut PIHAK PERTAMA", 0, 1);
+$pdf->Cell(0, 10, "Nama         : $nama_korespondensi", 0, 1);
 $pdf->WrapAndPrintAddress($alamat_perusahaan);
 
-$pdf->Cell(0,10,"Selanjutnya disebut PIHAK KEDUA",0,1);
+$pdf->Cell(0, 10, "Selanjutnya disebut PIHAK KEDUA", 0, 1);
 
-$pdf->Cell(0,10,"",0,1,);
+$pdf->Cell(0, 10, "", 0, 1,);
 
-$pdf->MultiCell(0,5,"PIHAK PERTAMA menyerahkan barang kepada PIHAK KEDUA, dan PIHAK KEDUA menyatakan telah menerima barang dari PIHAK PERTAMA berupa daftar terlampir:",0,1);
+$pdf->MultiCell(0, 5, "PIHAK PERTAMA menyerahkan barang kepada PIHAK KEDUA, dan PIHAK KEDUA menyatakan telah menerima barang dari PIHAK PERTAMA berupa daftar terlampir:", 0, 1);
 
 //TABEL PRODUK dan Jarak
-$pdf->Cell(0,5,"",0,1,);
+$pdf->Cell(0, 5, "", 0, 1,);
 
 $pdf->Cell(10, 5, "No", 1, 0, 'C');
 $pdf->Cell(45, 5, "Nama Barang", 1, 0, 'C');
@@ -186,20 +224,21 @@ while ($row = $result->fetch_assoc()) {
     $pdf->MultiCell($cellWidth, $cellHeight, $row['keterangan'], 1);
 }
 
-$pdf->Cell(0,10,"",0,1,);
+$pdf->Cell(0, 10, "", 0, 1,);
 
-$pdf->MultiCell(0,5,"Demikian berita acara serah terima barang ini dibuat oleh kedua belah pihak, adapun barang-barang tersebut dalam keadaan baik dan lengkap, sejak penandatanganan berita acara ini, maka barang tersebut menjadi tanggung jawab PIHAK KEDUA.",0,1);
+$pdf->MultiCell(0, 5, "Demikian berita acara serah terima barang ini dibuat oleh kedua belah pihak, adapun barang-barang tersebut dalam keadaan baik dan lengkap, sejak penandatanganan berita acara ini, maka barang tersebut menjadi tanggung jawab PIHAK KEDUA.", 0, 1);
 
-$pdf->Cell(0,10,"Yang Menyerahkan :",0,0, 'L');
-$pdf->Cell(0,10,"Yang Menerima :",0,1, 'R');
+$pdf->Cell(0, 10, "Yang Menyerahkan :", 0, 0, 'L');
+$pdf->Cell(0, 10, "Yang Menerima :", 0, 1, 'R');
 
-$pdf->Cell( 40, 40, $pdf->Image($imageTTD, $pdf->GetX(), $pdf->GetY(), 33.78), 0, 0, 'L', false );
 //Beri Underline
 $pdf->SetFont("Times","U",12);
 //Beri Jarak TTD
-$pdf->Cell(0,20,"",0,1,);
-$pdf->Cell(0,10,"Ahmad Sabhadi",0,0, 'L');
-$pdf->Cell(0,10,"$nama_korespondensi",0,1, 'R');
+$pdf->AddSignatureImage($tanda_tangan_link);
+$pdf->Cell(0,30,"",0,1,);
+
+$pdf->Cell(0, 10, "$namaLengkap", 0, 0, 'L');
+$pdf->Cell(0, 10, "$nama_korespondensi", 0, 1, 'R');
 
 
-$pdf->Output('I',"Berita Acara $nama_client.pdf");
+$pdf->Output('I', "Berita Acara $nama_client.pdf");
