@@ -14,48 +14,93 @@ if ($namaPT == '') {
     header("Location: login.php");
 }
 
+$queryDevice = "SELECT * FROM produk ORDER BY nama_produk";
+$resultDevice = $conn->query($queryDevice);
+
 if (isset($_POST['pilihClient'])) {
     $selectedClient = $_POST['pilihClient'];
+    $selectedDevice = $_POST['pilihDevice'];
 
-    // Milih bahan untuk produksi
-    $query = "SELECT i.id, i.nama_client, i.produk, i.no_sn, i.firmware_version, i.hardware_version, i.temperature, i.last_online, i.bat, i.pt, i.unit, i.status_error, i.ip_address, p.gambar_produk
-    FROM inventaris_produk i
-    JOIN produk p ON i.produk = p.nama_produk
-    WHERE i.nama_client = ? AND
-        i.id IS NOT NULL AND 
-        i.type_produk IS NOT NULL AND 
-        i.produk IS NOT NULL AND 
-        i.chip_id IS NOT NULL AND 
-        i.no_sn IS NOT NULL AND 
-        i.nama_client IS NOT NULL AND 
-        i.garansi_awal IS NOT NULL AND 
-        i.garansi_akhir IS NOT NULL AND 
-        i.garansi_void IS NOT NULL AND 
-        i.keterangan_void IS NOT NULL AND 
-        i.ip_address IS NOT NULL AND 
-        i.mac_wifi IS NOT NULL AND 
-        i.mac_bluetooth IS NOT NULL AND 
-        i.firmware_version IS NOT NULL AND 
-        i.hardware_version IS NOT NULL AND 
-        i.free_ram IS NOT NULL AND 
-        i.min_ram IS NOT NULL AND 
-        i.batt_low IS NOT NULL AND 
-        i.batt_high IS NOT NULL AND 
-        i.temperature IS NOT NULL AND 
-        i.status_error IS NOT NULL AND 
-        i.gps_latitude IS NOT NULL AND 
-        i.gps_longitude IS NOT NULL AND 
-        i.status_qc_sensor_1 IS NOT NULL AND 
-        i.status_qc_sensor_2 IS NOT NULL AND 
-        i.status_qc_sensor_3 IS NOT NULL AND 
-        i.status_qc_sensor_4 IS NOT NULL AND 
-        i.status_qc_sensor_5 IS NOT NULL AND 
-        i.status_qc_sensor_6 IS NOT NULL
-    ORDER BY i.last_online DESC";
+    if ($selectedDevice == 'device') {
+        $query = "SELECT i.id, i.nama_client, i.produk, i.no_sn, i.firmware_version, i.hardware_version, i.temperature, i.last_online, i.bat, i.pt, i.unit, i.status_error, i.ip_address, p.gambar_produk
+        FROM inventaris_produk i
+        JOIN produk p ON i.produk = p.nama_produk
+        WHERE i.nama_client = ? AND
+            i.id IS NOT NULL AND 
+            i.type_produk IS NOT NULL AND 
+            i.produk IS NOT NULL AND 
+            i.chip_id IS NOT NULL AND 
+            i.no_sn IS NOT NULL AND 
+            i.nama_client IS NOT NULL AND 
+            i.garansi_awal IS NOT NULL AND 
+            i.garansi_akhir IS NOT NULL AND 
+            i.garansi_void IS NOT NULL AND 
+            i.keterangan_void IS NOT NULL AND 
+            i.ip_address IS NOT NULL AND 
+            i.mac_wifi IS NOT NULL AND 
+            i.mac_bluetooth IS NOT NULL AND 
+            i.firmware_version IS NOT NULL AND 
+            i.hardware_version IS NOT NULL AND 
+            i.free_ram IS NOT NULL AND 
+            i.min_ram IS NOT NULL AND 
+            i.batt_low IS NOT NULL AND 
+            i.batt_high IS NOT NULL AND 
+            i.temperature IS NOT NULL AND 
+            i.status_error IS NOT NULL AND 
+            i.gps_latitude IS NOT NULL AND 
+            i.gps_longitude IS NOT NULL AND 
+            i.status_qc_sensor_1 IS NOT NULL AND 
+            i.status_qc_sensor_2 IS NOT NULL AND 
+            i.status_qc_sensor_3 IS NOT NULL AND 
+            i.status_qc_sensor_4 IS NOT NULL AND 
+            i.status_qc_sensor_5 IS NOT NULL AND 
+            i.status_qc_sensor_6 IS NOT NULL
+        ORDER BY i.last_online DESC";
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $selectedClient);
-    $stmt->execute();
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $selectedClient);
+        $stmt->execute();
+    } else {
+        $query = "SELECT i.id, i.nama_client, i.produk, i.no_sn, i.firmware_version, i.hardware_version, i.temperature, i.last_online, i.bat, i.pt, i.unit, i.status_error, i.ip_address, p.gambar_produk
+        FROM inventaris_produk i
+        JOIN produk p ON i.produk = p.nama_produk
+        WHERE i.nama_client = ? AND i.produk = ? AND
+            i.id IS NOT NULL AND 
+            i.type_produk IS NOT NULL AND 
+            i.produk IS NOT NULL AND 
+            i.chip_id IS NOT NULL AND 
+            i.no_sn IS NOT NULL AND 
+            i.nama_client IS NOT NULL AND 
+            i.garansi_awal IS NOT NULL AND 
+            i.garansi_akhir IS NOT NULL AND 
+            i.garansi_void IS NOT NULL AND 
+            i.keterangan_void IS NOT NULL AND 
+            i.ip_address IS NOT NULL AND 
+            i.mac_wifi IS NOT NULL AND 
+            i.mac_bluetooth IS NOT NULL AND 
+            i.firmware_version IS NOT NULL AND 
+            i.hardware_version IS NOT NULL AND 
+            i.free_ram IS NOT NULL AND 
+            i.min_ram IS NOT NULL AND 
+            i.batt_low IS NOT NULL AND 
+            i.batt_high IS NOT NULL AND 
+            i.temperature IS NOT NULL AND 
+            i.status_error IS NOT NULL AND 
+            i.gps_latitude IS NOT NULL AND 
+            i.gps_longitude IS NOT NULL AND 
+            i.status_qc_sensor_1 IS NOT NULL AND 
+            i.status_qc_sensor_2 IS NOT NULL AND 
+            i.status_qc_sensor_3 IS NOT NULL AND 
+            i.status_qc_sensor_4 IS NOT NULL AND 
+            i.status_qc_sensor_5 IS NOT NULL AND 
+            i.status_qc_sensor_6 IS NOT NULL
+        ORDER BY i.last_online DESC";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ss", $selectedClient, $selectedDevice);
+        $stmt->execute();
+    }
+
     $stmt->bind_result($id, $namaClient, $produk, $noSN, $firmwareVersion, $hardwareVersion, $temperature, $lastOnline, $battery, $pt, $unit, $statusError, $ipAddress, $gambarProduk);
     $resultDevices = array();
     while ($stmt->fetch()) {
@@ -78,7 +123,11 @@ if (isset($_POST['pilihClient'])) {
     }
 
     $stmt->close();
-    echo json_encode($resultDevices);
+    if (empty($resultDevices)) {
+        echo json_encode(null);
+    } else {
+        echo json_encode($resultDevices);
+    }
     exit();
 }
 ?>
@@ -95,6 +144,8 @@ if (isset($_POST['pilihClient'])) {
     $rootPath = $_SERVER['DOCUMENT_ROOT'];
     include $rootPath . "/owl_client/includes/stylesheet.html";
     ?>
+    <!-- Sweetalert2 -->
+    <link rel="stylesheet" href="assets/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
     <style>
         .card-container {
@@ -163,7 +214,17 @@ if (isset($_POST['pilihClient'])) {
                             <!-- /.card-header -->
                             <!-- form start -->
                             <div class="card-body">
-
+                                <div class="form-group">
+                                    <label for="pilihDevice">Pilih Device</label>
+                                    <select class="form-control select2" id="pilihDevice" name="pilihDevice">
+                                        <option value="device">Semua Device</option>
+                                        <?php
+                                        while ($rowDevice = $resultDevice->fetch_assoc()) {
+                                            echo '<option value="' . $rowDevice['nama_produk'] . '" data-image="' . $rowDevice['gambar_produk'] . '">' . $rowDevice['nama_produk'] . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                 <div id="cardsContainer" class="row"></div>
 
                             </div>
@@ -210,6 +271,9 @@ if (isset($_POST['pilihClient'])) {
     <!-- Moment js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/id.min.js"></script>
+    <!-- SweetAlert2 Toast -->
+    <script src="assets/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
+
     <!-- Page specific script -->
     <script>
         $(document).ready(function() {
@@ -220,6 +284,11 @@ if (isset($_POST['pilihClient'])) {
                 width: '100%',
                 containerCssClass: 'height-40px',
             });
+            
+            // Panggil fungsi cekDevices() ketika dropdown dipilih
+            $('#pilihDevice').on('change', function() {
+                cekDevices();
+            });
         });
 
         setInterval(function() {
@@ -227,15 +296,27 @@ if (isset($_POST['pilihClient'])) {
         }, 60000);
 
         function cekDevices() {
+            var selectedDevice = document.getElementById("pilihDevice").value;
+
             // Fetch and update the table
             $.ajax({
                 type: "POST",
                 url: "status_device.php",
                 data: {
                     pilihClient: '<?php echo $namaPT; ?>',
+                    pilihDevice: selectedDevice,
                 },
                 dataType: "json",
                 success: function(response) {
+
+                    if (response == null) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Data tidak ditemukan',
+                            text: '<?php echo $namaPT; ?> tidak memiliki ' + selectedDevice + '!',
+                        });
+                    }
+
                     var cardsContainer = document.getElementById("cardsContainer");
                     cardsContainer.innerHTML = ""; // Clear existing cards
 
@@ -262,7 +343,7 @@ if (isset($_POST['pilihClient'])) {
                         var hardware = document.createElement("p");
                         hardware.className = "version-text";
                         hardware.textContent = "Hardware: v" + device.hardwareVersion; // Use the relevant property from the response
-                        
+
                         var ipAddress = document.createElement("p");
                         ipAddress.className = "version-text";
                         ipAddress.textContent = device.ipAddress; // Use the relevant property from the response
