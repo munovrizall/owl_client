@@ -17,6 +17,76 @@ if ($namaPT == '') {
 $queryDevice = "SELECT * FROM produk ORDER BY nama_produk";
 $resultDevice = $conn->query($queryDevice);
 
+$queryJumlahDevice = "SELECT i.produk, COUNT(i.id) as jumlah_produk
+FROM inventaris_produk i
+JOIN produk p ON i.produk = p.nama_produk
+WHERE i.nama_client = '$namaPT' AND
+    i.id IS NOT NULL AND 
+    i.type_produk IS NOT NULL AND 
+    i.produk IS NOT NULL AND 
+    i.chip_id IS NOT NULL AND 
+    i.no_sn IS NOT NULL AND 
+    i.nama_client IS NOT NULL AND 
+    i.garansi_awal IS NOT NULL AND 
+    i.garansi_akhir IS NOT NULL AND 
+    i.garansi_void IS NOT NULL AND 
+    i.keterangan_void IS NOT NULL AND 
+    i.ip_address IS NOT NULL AND 
+    i.mac_wifi IS NOT NULL AND 
+    i.mac_bluetooth IS NOT NULL AND 
+    i.firmware_version IS NOT NULL AND 
+    i.hardware_version IS NOT NULL AND 
+    i.free_ram IS NOT NULL AND 
+    i.min_ram IS NOT NULL AND 
+    i.batt_low IS NOT NULL AND 
+    i.batt_high IS NOT NULL AND 
+    i.temperature IS NOT NULL AND 
+    i.status_error IS NOT NULL AND 
+    i.gps_latitude IS NOT NULL AND 
+    i.gps_longitude IS NOT NULL AND 
+    i.status_qc_sensor_1 IS NOT NULL AND 
+    i.status_qc_sensor_2 IS NOT NULL AND 
+    i.status_qc_sensor_3 IS NOT NULL AND 
+    i.status_qc_sensor_4 IS NOT NULL AND 
+    i.status_qc_sensor_5 IS NOT NULL AND 
+    i.status_qc_sensor_6 IS NOT NULL
+GROUP BY i.produk";
+$resultJumlahDevice = $conn->query($queryJumlahDevice);
+
+$queryJumlahSemuaDevice = "SELECT COUNT(*) as total FROM inventaris_produk WHERE 
+           id IS NOT NULL AND 
+           type_produk IS NOT NULL AND 
+           produk IS NOT NULL AND 
+           chip_id IS NOT NULL AND 
+           no_sn IS NOT NULL AND 
+           nama_client IS NOT NULL AND 
+           garansi_awal IS NOT NULL AND 
+           garansi_akhir IS NOT NULL AND 
+           garansi_void IS NOT NULL AND 
+           keterangan_void IS NOT NULL AND 
+           ip_address IS NOT NULL AND 
+           mac_wifi IS NOT NULL AND 
+           mac_bluetooth IS NOT NULL AND 
+           firmware_version IS NOT NULL AND 
+           hardware_version IS NOT NULL AND 
+           free_ram IS NOT NULL AND 
+           min_ram IS NOT NULL AND 
+           batt_low IS NOT NULL AND 
+           batt_high IS NOT NULL AND 
+           temperature IS NOT NULL AND 
+           status_error IS NOT NULL AND 
+           gps_latitude IS NOT NULL AND 
+           gps_longitude IS NOT NULL AND 
+           status_qc_sensor_1 IS NOT NULL AND 
+           status_qc_sensor_2 IS NOT NULL AND 
+           status_qc_sensor_3 IS NOT NULL AND 
+           status_qc_sensor_4 IS NOT NULL AND 
+           status_qc_sensor_5 IS NOT NULL AND 
+           status_qc_sensor_6 IS NOT NULL AND
+           nama_client = '$namaPT'";
+$resultJumlahSemuaDevice = mysqli_query($conn, $queryJumlahSemuaDevice);
+$rowSemuaJumlahDevice = mysqli_fetch_assoc($resultJumlahSemuaDevice)['total'];
+
 if (isset($_POST['pilihClient'])) {
     $selectedClient = $_POST['pilihClient'];
     $selectedDevice = $_POST['pilihDevice'];
@@ -217,11 +287,27 @@ if (isset($_POST['pilihClient'])) {
                                 <div class="form-group">
                                     <label for="pilihDevice">Pilih Device</label>
                                     <select class="form-control select2" id="pilihDevice" name="pilihDevice">
-                                        <option value="device">Semua Device</option>
+                                        <option value="device">Semua Device (<?php echo $rowSemuaJumlahDevice ?>)</option>
                                         <?php
-                                        while ($rowDevice = $resultDevice->fetch_assoc()) {
-                                            echo '<option value="' . $rowDevice['nama_produk'] . '" data-image="' . $rowDevice['gambar_produk'] . '">' . $rowDevice['nama_produk'] . '</option>';
+                                       while ($rowDevice = $resultDevice->fetch_assoc()) {
+                                        $namaProduk = $rowDevice['nama_produk'];
+                                        
+                                        // Cari jumlah produk yang sesuai dengan nama_produk
+                                        $jumlahProduk = 0; // Default jika tidak ada hasil
+                                        while ($rowJumlahDevice = $resultJumlahDevice->fetch_assoc()) {
+                                            if ($rowJumlahDevice['produk'] == $namaProduk) {
+                                                $jumlahProduk = $rowJumlahDevice['jumlah_produk'];
+                                                break;
+                                            }
                                         }
+                                    
+                                        // Tampilkan opsi dengan jumlah produk
+                                        echo '<option value="' . $namaProduk . '" data-image="' . $rowDevice['gambar_produk'] . '">' . $namaProduk . ' (' . $jumlahProduk . ')</option>';
+                                    
+                                        // Reset kursor result set untuk digunakan kembali pada iterasi berikutnya
+                                        $resultJumlahDevice->data_seek(0);
+                                    }
+                                    
                                         ?>
                                     </select>
                                 </div>
